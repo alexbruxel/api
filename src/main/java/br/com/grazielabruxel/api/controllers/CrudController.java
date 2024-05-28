@@ -16,6 +16,7 @@ public class CrudController
 {
     private ClienteService clienteService;
 
+    private int id = 13;
     public CrudController(ClienteService clienteService) {
         this.clienteService = clienteService;
     }
@@ -24,6 +25,13 @@ public class CrudController
     @ResponseBody
     public ResponseEntity<Cliente> criar(@RequestBody String requestBody) {
         Cliente cliente = new Cliente();
+
+        id++;
+
+        cliente.setId(id);
+        cliente.setNome("ALEX " + id);
+
+        clienteService.salvarCliente(cliente);
 
         //String responseBody = "CRUD Criado com Sucesso!";
 
@@ -48,12 +56,10 @@ public class CrudController
 
     @GetMapping(value = "/listar/{id}", produces = "application/json")
     @ResponseBody
-    public Map<String, String> listar(@PathParam("id") String id) {
-        Map<String, String> responseBody = new HashMap<>();
-        responseBody.put("id", id);
-        responseBody.put("message", "CRUD Listando com Sucesso!");
+    public ResponseEntity<Cliente> listar(@PathVariable("id") String id) {
 
-        return responseBody;
+        Cliente cliente = clienteService.buscarCliente(Integer.parseInt(id));
+        return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 
     @GetMapping(value = "/listar", produces = "application/json")

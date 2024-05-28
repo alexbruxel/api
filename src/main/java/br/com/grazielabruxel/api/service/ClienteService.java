@@ -14,7 +14,16 @@ public class ClienteService {
     ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
+
     public List<Cliente> listarClientes() {
         return this.clienteRepository.findAll();
+    }
+
+    public Cliente salvarCliente(Cliente cliente) {
+        return this.clienteRepository.save(cliente);
+    }
+
+    public Cliente buscarCliente(int id) {
+        return this.clienteRepository.findById(id).orElse(null);
     }
 }

@@ -26,4 +26,11 @@ public class ClienteService {
     public Cliente buscarCliente(int id) {
         return this.clienteRepository.findById(id).orElse(null);
     }
+
+
+
+    public int nextId() {
+        return Long.valueOf(this.clienteRepository.count() + 1).intValue();
+    }
+
 }
